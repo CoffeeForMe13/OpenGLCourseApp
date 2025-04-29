@@ -31,16 +31,16 @@ Setup steps
 	- Set Configuration to All Configurations
 	- Set Platform to All Platforms
 	- Under Configuration Properties -> C/C++ -> General edit the Additional Include Directories
-		- Add $(SolutionDir)/../../../External Libs/GLEW/include 
+		- Add $(SolutionDir)/../../External Libs/GLEW/include 
 			(the number of ../ depends on where you put the External Libs folder. To verify that it works, go back to main and type "#include \<GL\>")
-		- Add $(SolutionDir)/../../../External Libs/GLFW/include
+		- Add $(SolutionDir)/../../External Libs/GLFW/include
 			(the number of ../ depends on where you put the External Libs folder. To verify that it works, go back to main and type "#include \<GLFW\>")
 6. Tell it where our libraries are
 	- Go back into properties
 	- Under Configuration Properties -> Linker -> General edit Additional Library Directories
-		- Add $(SolutionDir)/../../../External Libs/GLEW/lib/Release/Win32 
+		- Add $(SolutionDir)/../../External Libs/GLEW/lib/Release/Win32 
 			(the number of ../ depends on where you put the External Libs folder)
-		- Add $(SolutionDir)/../../../External Libs/GLFW/lib-vc2022
+		- Add $(SolutionDir)/../../External Libs/GLFW/lib-vc2022
 			(the number of ../ depends on where you put the External Libs folder)
 			(<lib-vc2022> should correspond to the verion of Visual Studio you have installed (2022 in my case))
 	6.3. Under Configuration Properties -> Linker -> Input edit Additional Dependencies
