@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Workspaces/v17
+/OpenGLCourseAPP/.vs/OpenGLCourseAPP
+/OpenGLCourseAPP/OpenGLCourseAPP/Debug
