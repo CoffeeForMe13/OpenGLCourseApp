@@ -43,7 +43,7 @@ Setup steps
 		- Add $(SolutionDir)/../../External Libs/GLFW/lib-vc2022
 			(the number of ../ depends on where you put the External Libs folder)
 			(<lib-vc2022> should correspond to the verion of Visual Studio you have installed (2022 in my case))
-	6.3. Under Configuration Properties -> Linker -> Input edit Additional Dependencies
+	- Under Configuration Properties -> Linker -> Input edit Additional Dependencies
 		- Add opengl32.lib
 		- Add glew32.lib
 		- Add glfw3.lib (verify the name under External Libs/GLFW/lib-vc2022)
