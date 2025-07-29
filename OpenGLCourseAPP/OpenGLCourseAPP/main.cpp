@@ -11,6 +11,7 @@
 
 // Window dimensions
 const GLint WIDTH = 800, HEIGHT = 600;
+const float toRadians = 3.14159265f / 180.0f;
 
 GLuint VAO, VBO, shader, uniformModel;
 
@@ -18,6 +19,8 @@ bool directionToR = true;	// go to R == true; go to L == false
 float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
 float triIncrement = 0.0005f;
+
+float curAngle = 0.0f;
 
 // Vertex Shader
 static const char* vShader = "											\n\
@@ -210,6 +213,12 @@ int main()
 			directionToR = !directionToR;
 		}
 
+		curAngle += 0.01f;
+		if (curAngle >= 360)
+		{
+			curAngle -= 360;
+		}
+
 		// Clear window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -217,8 +226,9 @@ int main()
 		glUseProgram(shader);
 
 		glm::mat4 model(1.0f); //glm::mat4 model = glm::mat4(1.0f);
+		// THE ORDER IS IMPORTAT !!!
 		model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(triOffset, triOffset, 0.0f)); //diagonally
+		model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
