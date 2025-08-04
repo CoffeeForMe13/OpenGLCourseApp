@@ -117,7 +117,7 @@ void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
 	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
 	if (!result)
 	{
-		glGetShaderInfoLog(shader, sizeof(eLog), NULL, eLog);
+		glGetShaderInfoLog(theShader, sizeof(eLog), NULL, eLog);
 		printf("Error compiling the %d shader: '%s'\n", shaderType, eLog);
 		return;
 	}
