@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <cmath>
+#include <vector>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -9,11 +10,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Mesh.h"
+
 // Window dimensions
 const GLint WIDTH = 800, HEIGHT = 600;
 const float toRadians = 3.14159265f / 180.0f;
 
-GLuint VAO, VBO, IBO, shader, uniformModel, uniformProjection;
+std::vector<Mesh*> meshList;
+
+GLuint shader, uniformModel, uniformProjection;
 
 bool directionToR = true;	// go to R == true; go to L == false
 float triOffset = 0.0f;
@@ -77,24 +82,13 @@ void CreateTriangle()
 		 0.0f,  1.0f, 0.0f
 	};
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	Mesh* obj1 = new Mesh();
+	obj1->CreateMesh(vertices, indices, 12, 12);
+	meshList.push_back(obj1);
 
-		glGenBuffers(1, &IBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-			glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // You should unbind the IBO/EBO should be unbinded AFTER you unbind the VAO!
+	Mesh* obj2 = new Mesh();
+	obj2->CreateMesh(vertices, indices, 12, 12);
+	meshList.push_back(obj2);
 
 }
 
@@ -281,11 +275,14 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 
-		glBindVertexArray(VAO);
+		meshList[0]->RenderMesh();
 
-		glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-triOffset, 1.0f, -2.5f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
-		glBindVertexArray(0);
+		meshList[1]->RenderMesh();
 
 		glUseProgram(0);
 
