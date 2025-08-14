@@ -18,6 +18,10 @@ public:
 
 	bool getShouldClose() { return glfwWindowShouldClose(mainWindow); }
 
+	bool* getKeys() { return keys;  }
+	GLfloat getXChange();
+	GLfloat getYChange();
+
 	void swapBuffers() { glfwSwapBuffers(mainWindow); }
 
 	~GLWindow();
