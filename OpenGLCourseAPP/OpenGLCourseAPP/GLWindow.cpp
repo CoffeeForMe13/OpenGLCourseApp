@@ -53,6 +53,7 @@ int GLWindow::Initialise()
 
 	// Handle Key + Mouse Input
 	createCallbacks();
+	glfwSetInputMode(mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Allow modern extension features
 	glewExperimental = GL_TRUE;
@@ -76,6 +77,7 @@ int GLWindow::Initialise()
 void GLWindow::createCallbacks()
 {
 	glfwSetKeyCallback(mainWindow, handleKeys);
+	glfwSetCursorPosCallback(mainWindow, handleMouse);
 }
 
 void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int mode)
@@ -98,6 +100,26 @@ void GLWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int
 			theWindow->keys[key] = false;
 		}
 	}
+}
+
+void GLWindow::handleMouse(GLFWwindow* window, double xPos, double yPos)
+{
+	GLWindow* theWindow = static_cast<GLWindow*>(glfwGetWindowUserPointer(window));
+
+	if (theWindow->mouseFirstMoved)
+	{
+		theWindow->lastX = xPos;
+		theWindow->lastY = yPos;
+		theWindow->mouseFirstMoved = false;
+	}
+
+	theWindow->xChange = xPos - theWindow->lastX;
+	theWindow->yChange = theWindow->lastY - yPos;
+
+	theWindow->lastX = xPos;
+	theWindow->lastY = yPos;
+
+	printf("x:%.6f, y:%.6f\n", theWindow->xChange, theWindow->yChange);
 }
 
 GLWindow::~GLWindow()
