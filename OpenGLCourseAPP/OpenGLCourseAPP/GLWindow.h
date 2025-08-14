@@ -27,5 +27,10 @@ private:
 
 	GLint width, height;
 	GLint bufferWidth, bufferHeight;
+
+	bool keys[1024];
+
+	void createCallbacks();
+	static void handleKeys(GLFWwindow* window, int key, int code, int action, int mode);
 };
 
