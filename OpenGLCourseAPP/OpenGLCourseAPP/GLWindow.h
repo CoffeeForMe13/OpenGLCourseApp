@@ -32,7 +32,7 @@ private:
 	GLint width, height;
 	GLint bufferWidth, bufferHeight;
 
-	bool keys[1024];
+	bool keys[1024]{ 0 };
 
 	GLfloat lastX;
 	GLfloat lastY;
