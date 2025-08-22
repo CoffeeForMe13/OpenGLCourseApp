@@ -132,7 +132,6 @@ int main()
 								0.0f, 0.0f, -1.0f);
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformAmbientIntensity = 0, uniformAmbientColour = 0, uniformDirection = 0, uniformDiffuseIntensity = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
@@ -157,16 +156,11 @@ int main()
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
 		uniformView = shaderList[0].GetViewLocation();
-		uniformAmbientColour = shaderList[0].GetAmbientColourLocation();
-		uniformAmbientIntensity = shaderList[0].GetAmbientIntensityLocation();
-		uniformDirection = shaderList[0].GetDirectionLocation();
-		uniformDiffuseIntensity = shaderList[0].GetDiffuseIntensityLocation();
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShinessLocation();
 
-		mainLight.useLight(uniformAmbientIntensity, uniformAmbientColour,
-			uniformDiffuseIntensity, uniformDirection);
+		shaderList[0].SetDirectionalLight(&mainLight);
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));

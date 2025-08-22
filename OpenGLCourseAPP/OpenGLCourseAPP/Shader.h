@@ -31,6 +31,8 @@ public:
 	GLuint GetShinessLocation();
 	GLuint GetEyePositionLocation();
 
+	void SetDirectionalLight(DirectionalLight* dLight);
+
 	void UseShader();
 	void ClearShader();
 
