@@ -82,11 +82,11 @@ void CreateObjects()
 	};
 
 	GLfloat vertices[] = {
-	//	 x		y	  z			u	  v			nx	  ny	nz
-		-1.0f, -1.0f, 0.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		 0.0f, -1.0f, 1.0f,		0.5f, 0.0f,		0.0f, 0.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,		1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
-		 0.0f,  1.0f, 0.0f,		0.5f, 1.0f,		0.0f, 0.0f, 0.0f
+	//	 x		y	   z			u	  v			nx	  ny	nz
+		-1.0f, -1.0f, -0.6f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		 0.0f, -1.0f,  1.0f,		0.5f, 0.0f,		0.0f, 0.0f, 0.0f,
+		 1.0f, -1.0f, -0.6f,		1.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+		 0.0f,  1.0f,  0.0f,		0.5f, 1.0f,		0.0f, 0.0f, 0.0f
 	};
 
 	calcAverageNormals(indices, 12, vertices, 32, 8, 5);
@@ -111,7 +111,7 @@ void CreateShaders()
 
 int main()
 {
-	mainWindow = GLWindow(800, 600);
+	mainWindow = GLWindow(1366, 768);
 	mainWindow.Initialise();
 
 	CreateObjects();
@@ -175,8 +175,7 @@ int main()
 		// THE ORDER IS IMPORTAT !!!
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
 		//model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-
+		//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -186,8 +185,8 @@ int main()
 		meshList[0]->RenderMesh();
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 1.0f, -2.5f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 4.0f, -2.5f));
+		//model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		dirtTexture.useTexture();
