@@ -12,12 +12,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "CommonValues.h"
+
 #include "GLWindow.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "Texture.h"
 #include "DirectionalLight.h"
+#include "PointLight.h"
 #include "Material.h"
 
 const float toRadians = 3.14159265f / 180.0f;
@@ -34,6 +37,7 @@ Material shinyMaterial;
 Material dullMaterial;
 
 DirectionalLight mainLight;
+PointLight pointLights[MAX_POINT_LIGHTS];
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastTime = 0.0f;
@@ -131,6 +135,23 @@ int main()
 								0.1f, 0.3f,
 								0.0f, 0.0f, -1.0f);
 
+	unsigned int pointLightCount = 0;
+
+	pointLights[0] = PointLight(0.0f, 0.0f, 1.0f,
+								0.1f, 0.4f,
+								4.0f, 0.0f, 0.0f,
+								0.3f, 0.2f, 0.1f);
+	
+	pointLightCount++;
+
+	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f,
+								0.1f, 1.0f,
+							   -4.0f, 2.0f, 0.0f,
+								0.3f, 0.1f, 0.1f);
+	
+	pointLightCount++;
+
+
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
@@ -161,6 +182,7 @@ int main()
 		uniformShininess = shaderList[0].GetShinessLocation();
 
 		shaderList[0].SetDirectionalLight(&mainLight);
+		shaderList[0].SetPointLight(pointLights, pointLightCount);
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
