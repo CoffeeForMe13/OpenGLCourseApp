@@ -24,6 +24,8 @@
 #include "SpotLight.h"
 #include "Material.h"
 
+#include <assimp/Importer.hpp>
+
 const float toRadians = 3.14159265f / 180.0f;
 
 GLWindow mainWindow;
@@ -142,11 +144,11 @@ int main()
 	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.10f);
 
 	brickTexture = Texture((char*)"Textures/brick.png");
-	brickTexture.loadTexture();
+	brickTexture.loadTextureA();
 	dirtTexture = Texture((char*)"Textures/dirt.png");
-	dirtTexture.loadTexture();
+	dirtTexture.loadTextureA();
 	plainTexture = Texture((char*)"Textures/plain.png");
-	plainTexture.loadTexture();
+	plainTexture.loadTextureA();
 
 	shinyMaterial = Material(4.0f, 256);
 	dullMaterial = Material(0.3f, 4);
@@ -193,6 +195,8 @@ int main()
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
+
+	Assimp::Importer importer = Assimp::Importer();
 
 	// Loop until window closed
 	while (!mainWindow.getShouldClose())
