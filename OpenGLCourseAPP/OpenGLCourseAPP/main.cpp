@@ -286,7 +286,7 @@ int main()
 	boat.LoadModel("Models/boat.obj");
 
 
-	mainLight = DirectionalLight(1024, 1024,
+	mainLight = DirectionalLight(2048, 2048,
 								1.0f, 1.0f, 1.0f,
 								0.1f, 0.6f,
 								0.0f, -15.0f, -10.0f);
