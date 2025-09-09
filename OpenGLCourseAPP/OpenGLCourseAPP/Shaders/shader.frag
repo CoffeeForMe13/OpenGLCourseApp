@@ -70,6 +70,11 @@ float CalcDirectionalShadowFactor(DirectionalLight light)
 	
 	float shadow = current > closest ? 1.0 : 0.0; //currentDepth > closestDepth
 	
+	if(projCoords.z > 1.0) 
+	{
+		shadow = 0.0;
+	}
+	
 	return shadow;
 }
 
