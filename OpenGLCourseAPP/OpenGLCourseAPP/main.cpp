@@ -357,7 +357,7 @@ int main()
 								0.3f, 0.2f, 0.1f,
 								20.0f);
 	
-	//spotLightCount++;
+	spotLightCount++;
 
 	spotLights[1] = SpotLight(1024, 1024,
 								0.01f, 100.0f,
@@ -368,7 +368,7 @@ int main()
 								1.0f, 0.0f, 0.0f,
 								20.0f);
 	
-	//spotLightCount++;
+	spotLightCount++;
 
 	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
@@ -384,6 +384,12 @@ int main()
 
 		camera.keyControl(mainWindow.getKeys(), deltaTime);
 		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+
+		if (mainWindow.getKeys()[GLFW_KEY_L])
+		{
+			spotLights[0].Toggle();
+			mainWindow.getKeys()[GLFW_KEY_L] = false;
+		}
 
 		DirectionalShadowMapPass(&mainLight);
 		for (size_t i = 0; i < pointLightCount; i++)
