@@ -67,6 +67,15 @@ uniform Material material;
 
 uniform vec3 eyePosition;
 
+vec3 sampleOffsetDirections[20] = vec3[]
+(		//R   U   B  - Right Up Backwards  // L   D   U - Left Down Backwards
+	vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1),
+	vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+	vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+	vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+	vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0,  1, -1)
+);
+
 float CalcDirectionalShadowFactor(DirectionalLight light)
 {
 	vec3 projCoords = directionalLightSpacePos.xyz / directionalLightSpacePos.w; // xyzw
@@ -108,26 +117,20 @@ float CalcOmniShadowFactor(PointLight light, int shadowIndex)
 	
 	float shadow = 0;
 	float bias = 0.05;
-	float samples = 4.0;
-	float offset = 0.1;
+	int samples = 20;
+	float diskRadius = 0.05;
 	
-	for(float x = -offset; x < offset; x += offset / (samples * 0.5))
+	for(int i = 0; i < samples; i++)
 	{
-		for(float y = -offset; y < offset; y += offset / (samples * 0.5))
+		float closestDepth = texture(omniShadowMaps[shadowIndex].shadowMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+		closestDepth *= omniShadowMaps[shadowIndex].farPlane;
+		if(currentDepth - bias > closestDepth)
 		{
-			for(float z = -offset; z < offset; z += offset / (samples * 0.5))
-			{
-				float closestDepth = texture(omniShadowMaps[shadowIndex].shadowMap, fragToLight + vec3(x, y, z)).r;
-				closestDepth *= omniShadowMaps[shadowIndex].farPlane;
-				if(currentDepth - bias > closestDepth)
-				{
-					shadow += 1;
-				}
-			}
+			shadow += 1;
 		}
 	}
 	
-	shadow /= (samples * samples * samples);
+	shadow /= float(samples);
 	
 	return shadow;
 }
