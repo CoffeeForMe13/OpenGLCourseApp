@@ -104,14 +104,30 @@ float CalcDirectionalShadowFactor(DirectionalLight light)
 float CalcOmniShadowFactor(PointLight light, int shadowIndex)
 {
 	vec3 fragToLight = fragPos - light.position;
-	float closest = texture(omniShadowMaps[shadowIndex].shadowMap, fragToLight).r;
+	float currentDepth = length(fragToLight);
 	
-	closest *= omniShadowMaps[shadowIndex].farPlane;
-	
-	float current = length(fragToLight);
-	
+	float shadow = 0;
 	float bias = 0.05;
-	float shadow = current - bias > closest ? 1.0 : 0.0;
+	float samples = 4.0;
+	float offset = 0.1;
+	
+	for(float x = -offset; x < offset; x += offset / (samples * 0.5))
+	{
+		for(float y = -offset; y < offset; y += offset / (samples * 0.5))
+		{
+			for(float z = -offset; z < offset; z += offset / (samples * 0.5))
+			{
+				float closestDepth = texture(omniShadowMaps[shadowIndex].shadowMap, fragToLight + vec3(x, y, z)).r;
+				closestDepth *= omniShadowMaps[shadowIndex].farPlane;
+				if(currentDepth - bias > closestDepth)
+				{
+					shadow += 1;
+				}
+			}
+		}
+	}
+	
+	shadow /= (samples * samples * samples);
 	
 	return shadow;
 }
