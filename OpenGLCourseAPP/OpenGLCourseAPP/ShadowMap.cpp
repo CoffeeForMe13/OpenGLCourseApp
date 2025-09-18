@@ -1,4 +1,5 @@
 #include "ShadowMap.h"
+#include "OmiShadowMap.h"
 
 ShadowMap::ShadowMap()
 {
