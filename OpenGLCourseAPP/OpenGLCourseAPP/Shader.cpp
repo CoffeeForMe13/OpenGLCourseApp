@@ -206,7 +206,7 @@ void Shader::CompileProgram()
 	{
 		char locBuffer[100] = { '\0' };
 
-		snprintf(locBuffer, sizeof(locBuffer), "lightMAtrices[%d]", i);
+		snprintf(locBuffer, sizeof(locBuffer), "lightMatrices[%d]", i);
 		uniformLightMatrices[i] = glGetUniformLocation(shaderID, locBuffer);
 	}
 

@@ -110,7 +110,7 @@ float CalcOmniShadowFactor(PointLight light, int shadowIndex)
 	
 	float current = length(fragToLight);
 	
-	float bias =0.05;
+	float bias = 0.05;
 	float shadow = current - bias > closest ? 1.0 : 0.0;
 	
 	return shadow;
