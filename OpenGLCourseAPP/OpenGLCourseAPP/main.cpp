@@ -326,24 +326,24 @@ int main()
 
 	mainLight = DirectionalLight(2048, 2048,
 								1.0f, 1.0f, 1.0f,
-								0.1f, 0.3f,
+								0.0f, 0.1f,
 								0.0f, -15.0f, -10.0f);
 
 
 	pointLights[0] = PointLight(1024, 1024,
 								0.01f, 100.0f,
 								0.0f, 0.0f, 1.0f,
-								0.1f, 0.1f,
-								4.0f, 0.0f, 0.0f,
-								0.3f, 0.2f, 0.1f);
+								0.0f, 1.0f,
+								1.0f, 2.0f, 0.0f,
+								0.3f, 0.1f, 0.1f);
 	
 	pointLightCount++;
 
 	pointLights[1] = PointLight(1024, 1024,
 								0.01f, 100.0f,
 								0.0f, 1.0f, 0.0f,
-								0.1f, 0.1f,
-							   -4.0f, 2.0f, 0.0f,
+								0.0f, 1.0f,
+							   -4.0f, 3.0f, 0.0f,
 								0.3f, 0.1f, 0.1f);
 	
 	pointLightCount++;
@@ -357,7 +357,7 @@ int main()
 								0.3f, 0.2f, 0.1f,
 								20.0f);
 	
-	spotLightCount++;
+	//spotLightCount++;
 
 	spotLights[1] = SpotLight(1024, 1024,
 								0.01f, 100.0f,
@@ -368,7 +368,7 @@ int main()
 								1.0f, 0.0f, 0.0f,
 								20.0f);
 	
-	spotLightCount++;
+	//spotLightCount++;
 
 	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 100.0f);
 
